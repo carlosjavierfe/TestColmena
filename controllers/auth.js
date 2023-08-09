@@ -85,10 +85,11 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
+    const user = req.user;
     const id = req.params.id;
     const data = await userModel.findById({ _id: id });
-    res.send({ data });
-    //console.log(data);
+    res.send({ data, user });
+    console.log("eldecontroller:",user);
   } catch (e) {
     console.log(e);
     handleHttpError(res, "ERROR_GET_USER");

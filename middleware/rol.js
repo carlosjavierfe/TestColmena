@@ -1,19 +1,24 @@
 const { handleHttpError } = require("../utils/handleError");
+const { userModel } = require("../models");
+//const { session } = require("../middleware");
 
 /**
  * Array con los roles permitidos
  * @param {*} rol
  * @returns
  */
-const checkRol = (roles) => (req, res, next) => {
+const checkRol = (rol) => (req, res, next) => {
   try {
-    console.log(req.body);
+    
     const { user } = req;
-    console.log(user);
+    
+
     const rolesByUser = user.role;
-    const checkValueRol = roles.some((rolSingle) =>
-      rolesByUser.inludes(rolSingle)
-    );
+    
+    const checkValueRol = rol.some((rolSingle) => rolesByUser.includes(rolSingle))
+
+
+    
     if (!checkValueRol) {
       handleHttpError(res, "USER_NOT_PERMISSIONS", 403);
       return;
